@@ -25,6 +25,7 @@
           :key="link.icon"
           link
           color="teal"
+          :to="link.to"
         >
           <v-list-item-icon>
             <v-icon>{{ link.icon }}</v-icon>
@@ -62,9 +63,9 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: 'mdi-account-outline', text: '个人中心' },
-        { icon: 'mdi-list-status', text: '参加测评' },
-        { icon: 'mdi-chart-timeline', text: '查看报告' },
+        { icon: 'mdi-account-outline', text: '个人中心',to:'/app/user', },
+        { icon: 'mdi-list-status', text: '参加测评',to:'/app/evaluation', },
+        { icon: 'mdi-chart-timeline', text: '查看报告',to:'/app/report', },
       ]
     }
   }
