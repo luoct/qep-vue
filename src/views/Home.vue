@@ -1,18 +1,79 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-main>
+      <v-banner
+        tile
+        icon="mdi-pillar"
+        app
+        icon-color="teal"
+      >
+        <div class="text-h6">Cover</div>
+      </v-banner>
+      <v-tabs
+        background-color="transparent"
+        centered
+      >
+        <v-tabs-slider color="teal"></v-tabs-slider>
+        <v-tab>首页</v-tab>
+        <v-tab>详情</v-tab>
+        <v-tab>帮助</v-tab>
+
+      </v-tabs>
+      <div class="box mt-12">
+        <div class="text-h4 text-center">问卷评估平台</div>
+        <div class="text-body-2 text-center px-10 mt-2">本平台致力于提供。。。。。。床前明月光，疑似地上霜。举头望明月，低头思故乡。</div>
+        <v-btn
+          color="teal"
+          width="50%"
+          class="pa-5 mt-10"
+          dark
+          @click="toLogin"
+        >Get Started!</v-btn>
+
+      </div>
+
+    </v-main>
+
+    <v-footer
+      padless
+      color="transparent"
+    >
+      <v-col
+        class="text-center"
+        cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>hjjgcdx</strong>
+        <div class="text-caption">Powered by luoct</div>
+      </v-col>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  data: () => ({
+    drawer: false,
+  }),
+  methods: {
+    toLogin() {
+      this.$router.push('login')
+    }
   }
 }
 </script>
+
+<style>
+  .v-banner__wrapper {
+    border: none !important;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .v-tab,
+  .v-tabs-slider-wrapper {
+    min-width: 2rem !important;
+    max-width: 10rem !important;
+  }
+</style>
