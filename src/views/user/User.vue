@@ -15,9 +15,9 @@
         >
       </v-avatar>
       <div class="title">
-        <div class="text-h5">张三</div>
+        <div class="text-h5">{{ userInfo.username }}</div>
         <div class="text-body-2 mt-1">
-          此人没什么想说的
+          {{ userInfo.signature }}
         </div>
       </div>
     </v-card>
@@ -42,16 +42,20 @@
           >
 
             <v-text-field
-              v-model="info.name"
-              label="用户名"
+              v-model="userInfo.username"
+              label="姓名"
               disabled
             ></v-text-field>
             <v-text-field
-              v-model="info.sname"
-              label="姓名"
+              v-model="userInfo.stuNo"
+              label="学号"
             ></v-text-field>
             <v-text-field
-              v-model="info.address"
+              v-model="userInfo.mobile"
+              label="电话"
+            ></v-text-field>
+            <v-text-field
+              v-model="userInfo.signature"
               label="个性签名"
               placeholder="不超过50个字"
               counter="50"
@@ -62,6 +66,7 @@
               dark
               width="100%"
               class="mt-1"
+              @click="changeInfo"
             >提交</v-btn>
 
           </v-card>
@@ -73,25 +78,26 @@
           >
 
             <v-text-field
-              v-model="info.name"
+              v-model="username"
               label="用户名"
               disabled
             ></v-text-field>
             <v-text-field
-              v-model="info.sname"
+              v-model="oldPwd"
               label="旧密码"
             ></v-text-field>
             <v-text-field
-              v-model="info.address"
+              v-model="newPwd"
               label="新密码"
               required
             ></v-text-field>
-            
+
             <v-btn
               color="teal"
               dark
               width="100%"
               class="mt-1"
+              @click="changePassword"
             >修改</v-btn>
           </v-card>
         </v-tab-item>
@@ -105,13 +111,55 @@ export default {
   data() {
     return {
       tab: null,
-      info: { name: 's' },
+      userInfo: {
+        username: '',
+        mobile: '',
+        signature: '',
+        hex: '',
+        stuNo: ''
+      },
+      username: '',
+      oldPwd: '',
+      newPwd: '',
+
     }
   },
   computed: {
     avatarSrc() {
-      let hash = 'd6fe8c82fb0abac17a702fd2a94eff37';
-      return this.Identicon(hash)
+      try {
+        return this.Identicon(this.userInfo.hex)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+  created() {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() {
+      this.$http.get('/user/getInfo').then(({ data: res }) => {
+        if (res.code !== 1) return alert('网络出错了，请重试')
+        // console.log(res.data);
+        this.userInfo = res.data
+        this.userInfo.signature = res.data.signature !== '' ? res.data.signature : '此人什么都不想说！'
+        this.username = res.data.username
+      })
+    },
+    changeInfo() {
+      this.$http.post('/user/changeInfo').then(({ data: res }) => {
+        if (res.code !== 1) return alert('网络出错了，请重试')
+        alert('修改成功')
+      })
+    },
+    changePassword() {
+      this.$http.post('/user/changePassword').then(({ data: res }) => {
+        if (this.newPwd === '' || this.oldPwd === '') return
+        if (res.code !== 1) return alert('网络出错了，请重试')
+        alert('修改成功')
+        window.sessionStorage.removeItem('username')
+        this.$router.push('/login')
+      })
     }
   }
 }

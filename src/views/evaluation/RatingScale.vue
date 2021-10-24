@@ -53,24 +53,32 @@ export default {
     return {
       type: '',
       info: {
-        msg: '请根据最近一星期内的状况，回答下列问题请根据最近一星期内的状况，回答下列问题请根据最近一星期内的状况，回答下列问题',
+        msg: '',
         questions: [
           '头痛', '神经过敏', '头晕或晕倒', '因为感到害怕而避开某些东西、场合或活动', '吃的太多'
         ],
         options: ['从无', '很轻', '中等', '偏重', '严重',],
-        v: '',
       },
       answerArr: [],
       btnDisabled: false,
     }
   },
-  mounted() {
+  created() {
     this.type = this.$route.params.type
+    this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
+      console.log(res)
+      this.info = res.data
+    })
   },
   methods: {
     submitAnswer() {
+      // todo 提交的表单验证
       this.btnDisabled = !this.btnDisabled
-      console.log(this.answerArr);
+      console.log(this.answerArr)
+      this.$http.post('/evaluation/postAnswer', this.answerArr).then(({ data: res }) => {
+        console.log(res)
+        alert('提交成功')
+      })
     }
   }
 }

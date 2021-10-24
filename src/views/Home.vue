@@ -61,7 +61,7 @@ export default {
     }
   }
 }
-</script>
+</script scoped>
 
 <style>
   .v-banner__wrapper {

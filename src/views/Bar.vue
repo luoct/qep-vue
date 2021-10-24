@@ -13,13 +13,10 @@
           color="grey darken-1"
           size="64"
         >
-          <img
-            :src="avatarSrc"
-            alt=""
-          >
+          <img :src="avatarSrc">
         </v-avatar>
 
-        <div>张三</div>
+        <div>{{userInfo.username}}</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -51,7 +48,10 @@
 
       <v-toolbar-title>Cover</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text>登出</v-btn>
+      <v-btn
+        text
+        @click="logout"
+      >登出</v-btn>
     </v-app-bar>
 
     <v-main>
@@ -66,6 +66,13 @@
 export default {
   data() {
     return {
+      userInfo: {
+        username: '',
+        mobile: '',
+        signature: '',
+        hex: '',
+        stuNo: ''
+      },
       drawer: false,
       links: [
         { icon: 'mdi-account-outline', text: '个人中心', to: '/app/user', },
@@ -74,10 +81,33 @@ export default {
       ]
     }
   },
+  created() {
+    this.getUserInfo()
+  },
   computed: {
     avatarSrc() {
-      let hash = 'd6fe8c82fb0abac17a702fd2a94eff37';
-      return this.Identicon(hash)
+      try {
+        return this.Identicon(this.userInfo.hex)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+  methods: {
+    getUserInfo() {
+      this.$http.get('/user/getInfo').then(({ data: res }) => {
+        if (res.code !== 1) return alert('网络出错了，请重试')
+        // console.log(res.data);
+        this.userInfo = res.data
+      })
+    },
+
+    logout() {
+      this.$http.get('/logout').then(({ data: res }) => {
+        if (res.code == 1) {
+          this.$router.push('/')
+        }
+      })
     }
   }
 }
