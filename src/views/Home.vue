@@ -25,8 +25,9 @@
         <v-btn
           color="teal"
           width="50%"
-          class="pa-5 mt-10"
+          class="mt-10"
           dark
+          large
           @click="toLogin"
         >Get Started!</v-btn>
 
@@ -56,7 +57,7 @@ export default {
   }),
   methods: {
     toLogin() {
-      this.$router.push('login')
+      this.$router.push('/login')
     }
   }
 }

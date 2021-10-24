@@ -12,7 +12,12 @@
           class="mb-4"
           color="grey darken-1"
           size="64"
-        ></v-avatar>
+        >
+          <img
+            :src="avatarSrc"
+            alt=""
+          >
+        </v-avatar>
 
         <div>张三</div>
       </v-sheet>
@@ -63,10 +68,16 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: 'mdi-account-outline', text: '个人中心',to:'/app/user', },
-        { icon: 'mdi-list-status', text: '参加测评',to:'/app/evaluation', },
-        { icon: 'mdi-chart-timeline', text: '查看报告',to:'/app/report', },
+        { icon: 'mdi-account-outline', text: '个人中心', to: '/app/user', },
+        { icon: 'mdi-list-status', text: '参加测评', to: '/app/evaluation', },
+        { icon: 'mdi-chart-timeline', text: '查看报告', to: '/app/report', },
       ]
+    }
+  },
+  computed: {
+    avatarSrc() {
+      let hash = 'd6fe8c82fb0abac17a702fd2a94eff37';
+      return this.Identicon(hash)
     }
   }
 }
