@@ -20,7 +20,7 @@
 
       </v-tabs>
       <div class="box mt-12">
-        <div class="text-h4 text-center">问卷评估平台</div>
+        <div class="text-h4 text-center">号手能力评估系统</div>
         <div class="text-body-2 text-center px-10 mt-2">本平台致力于提供。。。。。。床前明月光，疑似地上霜。举头望明月，低头思故乡。</div>
         <v-btn
           color="teal"
@@ -44,7 +44,10 @@
         cols="12"
       >
         {{ new Date().getFullYear() }} — <strong>hjjgcdx</strong>
-        <div class="text-caption">Powered by luoct</div>
+        <div class="text-caption">Powered by <a
+            href="mailto:1422291209@qq.com"
+            target="_blank"
+          >luoct</a></div>
       </v-col>
     </v-footer>
   </v-app>
@@ -64,6 +67,11 @@ export default {
 </script scoped>
 
 <style>
+  #app {
+    background: url("../assets/bg.png");
+    background-position: center bottom;
+    background-size: cover;
+  }
   .v-banner__wrapper {
     border: none !important;
   }

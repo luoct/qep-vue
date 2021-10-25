@@ -46,7 +46,14 @@
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Cover</v-toolbar-title>
+      <v-toolbar-title class="pl-1">
+        <v-btn
+          text
+          color="#fff"
+          class="brand ma-0 px-0"
+          to="/"
+        >Cover</v-btn>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         text
@@ -76,7 +83,7 @@ export default {
       drawer: false,
       links: [
         { icon: 'mdi-account-outline', text: '个人中心', to: '/app/user', },
-        { icon: 'mdi-list-status', text: '参加测评', to: '/app/evaluation', },
+        { icon: 'mdi-list-status', text: '参加评估', to: '/app/evaluation', },
         { icon: 'mdi-chart-timeline', text: '查看报告', to: '/app/report', },
       ]
     }
@@ -87,7 +94,9 @@ export default {
   computed: {
     avatarSrc() {
       try {
-        return this.Identicon(this.userInfo.hex)
+        // let hex = 'd6fe8c82fb0abac17a702fd2a94eff37'
+        let hex = this.userInfo.hex
+        return this.Identicon(hex)
       } catch (error) {
         console.log(error);
       }
@@ -114,4 +123,9 @@ export default {
 </script>
 
 <style scoped>
+  .brand {
+    font-size: 20px !important;
+    text-transform: none !important;
+    font-family: "Roboto", sans-serif !important;
+  }
 </style>

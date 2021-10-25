@@ -43,8 +43,7 @@
 
             <v-text-field
               v-model="userInfo.username"
-              label="姓名"
-              disabled
+              label="用户名"
             ></v-text-field>
             <v-text-field
               v-model="userInfo.stuNo"
@@ -149,6 +148,8 @@ export default {
     changeInfo() {
       this.$http.post('/user/changeInfo').then(({ data: res }) => {
         if (res.code !== 1) return alert('网络出错了，请重试')
+        console.log(res.data);
+        this.userInfo = res.data
         alert('修改成功')
       })
     },

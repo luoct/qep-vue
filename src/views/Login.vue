@@ -3,123 +3,133 @@
   <v-app>
     <v-main class="d-flex align-center justify-center">
 
-      <!-- 登录 -->
-      <v-card
-        v-if="loginVisible"
-        class="pa-8 ma-3"
-        elevation="5"
-      >
-        <v-img
-          src="../assets/q.png"
-          width="42%"
-          class="ma-auto"
-        ></v-img>
-        <v-form
-          ref="loginFormRef"
-          v-model="valid"
-          lazy-validation
-        >
-          <v-text-field
-            v-model="loginData.usename"
-            append-icon="mdi-account"
-            label="用户名"
-            :rules="[v => !!v || '请输入账号']"
-            required
-          />
-          <v-text-field
-            v-model="loginData.password"
-            append-icon="mdi-lock"
-            label="密码"
-            type="password"
-            :rules="[v => !!v || '请输入密码']"
-            required
-          />
+      <v-tabs-items v-model="loginVisible">
+        <v-tab-item>
 
-          <v-card-actions class="d-flex align-center justify-center">
-            <v-btn
-              color="teal"
-              dark
-              elevation="2"
-              class="mr-2"
-              width="50%"
-              @click="login"
-            >登录</v-btn>
-            <v-btn
-              color="teal"
-              outlined
-              elevation="2"
-              class="ml-2"
-              width="50%"
-              @click="loginVisible = !loginVisible"
-            >去注册</v-btn>
-          </v-card-actions>
-        </v-form>
+          <!-- 登录 -->
+          <v-card
+            class="pa-8 ma-3 h400"
+            elevation="5"
+          >
+            <v-img
+              src="../assets/q.png"
+              width="42%"
+              class="ma-auto"
+            ></v-img>
+            <v-form
+              ref="loginFormRef"
+              v-model="valid"
+              lazy-validation
+            >
+              <v-text-field
+                v-model="loginData.usename"
+                append-icon="mdi-account"
+                label="用户名"
+                :rules="[v => !!v || '请输入账号']"
+                required
+              />
+              <v-text-field
+                v-model="loginData.password"
+                append-icon="mdi-lock"
+                label="密码"
+                type="password"
+                :rules="[v => !!v || '请输入密码']"
+                required
+              />
 
-      </v-card>
+              <v-card-actions class="d-flex align-center justify-center mt-5">
+                <v-btn
+                  color="teal"
+                  dark
+                  elevation="2"
+                  class="mr-2"
+                  width="50%"
+                  @click="login"
+                >登录</v-btn>
+                <v-btn
+                  color="teal"
+                  outlined
+                  elevation="2"
+                  class="ml-2"
+                  width="50%"
+                  @click="loginVisible = 1"
+                >去注册</v-btn>
+              </v-card-actions>
+            </v-form>
 
-      <!-- 注册 -->
-      <v-card
-        v-else
-        class="pa-8 ma-3"
-        elevation="5"
-      >
-        <v-form
-          ref="registerFormRef"
-          v-model="valid"
-          lazy-validation
-        >
-          <v-text-field
-            v-model="registerData.usename"
-            append-icon="mdi-account"
-            label="用户名"
-            :rules="[v => !!v || '请输入账号']"
-            required
-          />
-          <v-text-field
-            v-model="registerData.password"
-            append-icon="mdi-lock"
-            label="密码"
-            type="password"
-            :rules="[v => !!v || '请输入密码']"
-            required
-          />
-          <v-text-field
-            v-model="registerData.mobile"
-            append-icon="mdi-lock"
-            label="电话"
-            type="mobile"
-            :rules="[v => !!v || '请输入密码']"
-            required
-          />
-          <v-text-field
-            v-model="registerData.stuNo"
-            append-icon="mdi-lock"
-            label="学号"
-            type="stuNo"
-            :rules="[v => !!v || '请输入密码']"
-            required
-          />
-          <v-card-actions class="d-flex align-center justify-center">
-            <v-btn
-              color="teal"
-              outlined
-              elevation="2"
-              class="mr-2"
-              width="50%"
-              @click="loginVisible = !loginVisible"
-            >去登录</v-btn>
-            <v-btn
-              color="teal"
-              dark
-              elevation="2"
-              class="ml-2"
-              width="50%"
-              @click="register"
-            >注册</v-btn>
-          </v-card-actions>
-        </v-form>
+          </v-card>
 
-      </v-card>
+        </v-tab-item>
+        <v-tab-item>
+
+          <!-- 注册 -->
+          <v-card
+            class="pa-8 ma-3 h400"
+            elevation="5"
+            transition="scroll-x-transition"
+          >
+            <v-form
+              ref="registerFormRef"
+              v-model="valid"
+              lazy-validation
+            >
+              <v-text-field
+                v-model="registerData.usename"
+                append-icon="mdi-account"
+                label="用户名"
+                :rules="[v => !!v || '请输入账号']"
+                required
+              />
+              <v-text-field
+                v-model="registerData.password"
+                append-icon="mdi-lock"
+                label="密码"
+                type="password"
+                :rules="[v => !!v || '请输入密码']"
+                required
+              />
+              <v-text-field
+                v-model="registerData.mobile"
+                append-icon="mdi-cellphone"
+                label="电话"
+                type="mobile"
+                :rules="[v => !!v || '请输入电话号码']"
+                required
+              />
+              <v-text-field
+                v-model="registerData.stuNo"
+                append-icon="mdi-school"
+                label="学号"
+                type="stuNo"
+                :rules="[v => !!v || '请输入学号']"
+                required
+              />
+              <v-card-actions class="d-flex align-center justify-center">
+                <v-btn
+                  color="teal"
+                  outlined
+                  elevation="2"
+                  class="mr-2"
+                  width="50%"
+                  @click="loginVisible = 0"
+                >去登录</v-btn>
+                <v-btn
+                  color="teal"
+                  dark
+                  elevation="2"
+                  class="ml-2"
+                  width="50%"
+                  @click="register"
+                >注册</v-btn>
+              </v-card-actions>
+            </v-form>
+
+          </v-card>
+
+        </v-tab-item>
+
+      </v-tabs-items>
+
     </v-main>
   </v-app>
 
@@ -129,7 +139,7 @@
 export default {
   data: () => ({
     //
-    loginVisible: true,
+    loginVisible: 0,
     loginData: {
       username: '',
       password: '',
@@ -176,9 +186,10 @@ export default {
 </script>
 
 <style>
-  #app {
-    background: url("../assets/bg.png");
-    background-position: center bottom;
-    background-size: cover;
+  .theme--light.v-tabs-items {
+    background-color: transparent!important;;
+  }
+  .h400 {
+    height: 400px;
   }
 </style>
