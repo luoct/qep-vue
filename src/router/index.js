@@ -1,12 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
 import Bar from '../views/Bar.vue'
-import User from '../views/user/User.vue'
-import Evaluation from '../views/evaluation/Evaluation'
-import RatingScale from '../views/evaluation/RatingScale'
-import Report from '../views/report/Report'
+
+// import Login from '../views/Login.vue'
+const Login = () => import(/* webpackChunkName: "group-1" */ '../views/Login.vue')
+// import User from '../views/user/User.vue'
+const User = () => import(/* webpackChunkName: "group-2" */ '../views/user/User.vue')
+
+// import Evaluation from '../views/evaluation/Evaluation'
+// import RatingScale from '../views/evaluation/RatingScale'
+const Evaluation = () => import(/* webpackChunkName: "group-3" */ '../views/evaluation/Evaluation')
+const RatingScale = () => import(/* webpackChunkName: "group-3" */ '../views/evaluation/RatingScale')
+
+
+// import Report from '../views/report/Report'
+const Report = () => import(/* webpackChunkName: "group-4" */ '../views/report/Report')
 
 
 
@@ -33,7 +42,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
 })
 
 export default router

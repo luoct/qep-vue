@@ -119,9 +119,8 @@ export default {
 
     logout() {
       this.$http.get('/logout').then(({ data: res }) => {
-        if (res.code == 1) {
-          this.$router.push('/')
-        }
+        window.sessionStorage.setItem('token', '')
+        this.$router.push('/')
       })
     }
   }

@@ -5,7 +5,7 @@
       width="100%"
       class="ma-2 pa-4 pb-8"
     >
-      <div class="text-h5 text-center pt-2 pb-4">SAS焦虑自评量表测试SAS</div>
+      <div class="text-h5 text-center pt-2 pb-4">{{title}}</div>
       <v-alert
         color="warning"
         outlined
@@ -58,6 +58,7 @@
 export default {
   data() {
     return {
+      title: '',
       type: '',
       info: {
         msg: '',
@@ -74,6 +75,7 @@ export default {
     this.type = this.$route.params.type
     this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
       console.log(res)
+      this.title = res.data.title
       this.info = res.data
     })
   },
@@ -87,7 +89,7 @@ export default {
       this.$http.post('/evaluation/postAnswer', { answer: this.answerArr, type: this.type }).then(({ data: res }) => {
         console.log(res)
         this.btnDisabled = !this.btnDisabled
-        alert('提交成功')
+        // alert('提交成功')
       })
     }
   }

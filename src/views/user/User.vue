@@ -174,11 +174,13 @@ export default {
       if (!this.$refs.changeInfoFormRef.validate()) return
 
       this.$http.post('/user/changeInfo', this.userInfo).then(({ data: res }) => {
-        if (res.code !== 1) return alert('网络出错了，请重试')
+        if (res.code !== 1) {
+
+        }
         console.log(res.data)
         // this.userInfo = res.data
         this.getUserInfo()
-        alert('修改成功')
+        // alert('修改成功')
       })
     },
     changePassword() {
@@ -186,8 +188,11 @@ export default {
 
       this.$http.post('/user/changePassword', { newPwd: this.newPwd }).then(({ data: res }) => {
         if (this.newPwd === '' || this.oldPwd === '') return
-        if (res.code !== 1) return alert('修改失败，请重试')
-        alert('修改成功')
+        if (res.code !== 1) {
+          // alert('网络出错了，请重试')
+          return
+        }
+        // alert('修改成功')
         window.sessionStorage.removeItem('token')
         this.$router.push('/login')
       })
