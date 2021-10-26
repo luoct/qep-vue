@@ -24,7 +24,7 @@
             v-for="(item, i) in info.questions"
             :key="i"
           >
-            <div class="text-h6 pb-2">{{i+1+'、'+item}}</div>
+            <div class="text-h6 pb-2">{{item}}</div>
             <div class="options">
               <v-radio-group
                 v-model="answerArr[i]"
@@ -61,10 +61,8 @@ export default {
       type: '',
       info: {
         msg: '',
-        questions: [
-          '头痛', '神经过敏', '头晕或晕倒', '因为感到害怕而避开某些东西、场合或活动', '吃的太多'
-        ],
-        options: ['从无', '很轻', '中等', '偏重', '严重',],
+        questions: [],
+        options: [],
       },
       answerArr: [],
       btnDisabled: false,
