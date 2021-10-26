@@ -22,9 +22,9 @@
               lazy-validation
             >
               <v-text-field
-                v-model="loginData.usename"
+                v-model="loginData.stuNo"
                 append-icon="mdi-account"
-                label="用户名"
+                label="学号"
                 :rules="[v => !!v || '请输入账号']"
                 required
               />
@@ -74,10 +74,11 @@
               lazy-validation
             >
               <v-text-field
-                v-model="registerData.usename"
-                append-icon="mdi-account"
-                label="用户名"
-                :rules="[v => !!v || '请输入账号']"
+                v-model="registerData.stuNo"
+                append-icon="mdi-school"
+                label="学号"
+                type="stuNo"
+                :rules="[v => !!v || '请输入学号']"
                 required
               />
               <v-text-field
@@ -89,6 +90,13 @@
                 required
               />
               <v-text-field
+                v-model="registerData.username"
+                append-icon="mdi-account"
+                label="用户名"
+                :rules="[v => !!v || '请输入用户名']"
+                required
+              />
+              <v-text-field
                 v-model="registerData.mobile"
                 append-icon="mdi-cellphone"
                 label="电话"
@@ -96,14 +104,7 @@
                 :rules="[v => !!v || '请输入电话号码']"
                 required
               />
-              <v-text-field
-                v-model="registerData.stuNo"
-                append-icon="mdi-school"
-                label="学号"
-                type="stuNo"
-                :rules="[v => !!v || '请输入学号']"
-                required
-              />
+
               <v-card-actions class="d-flex align-center justify-center">
                 <v-btn
                   color="teal"
@@ -141,14 +142,14 @@ export default {
     //
     loginVisible: 0,
     loginData: {
-      username: '',
+      stuNo: '',
       password: '',
     },
     registerData: {
-      username: '',
-      password: '',
-      mobile: '',
       stuNo: '',
+      password: '',
+      username: '',
+      mobile: '',
     },
     valid: true,
 
@@ -156,28 +157,31 @@ export default {
   methods: {
     login() {
       if (!this.$refs.loginFormRef.validate()) return
-      this.$http.post('/login').then(({ data: res }) => {
+      this.$http.post('/login', this.loginData).then(({ data: res }) => {
         if (res.code !== 1) {
-          alert("登录失败，请重试")
+          alert("账号密码错误，请重新登录")
           this.$refs.loginFormRef.reset()
         } else {
           console.log(res)
-          window.sessionStorage.setItem('username', res.data.username)
+          window.sessionStorage.setItem('stuNo', res.data.stuNo)
+          window.sessionStorage.setItem('token', res.data.token)
           this.$router.push('/app/user')
         }
       })
     },
     register() {
       if (!this.$refs.registerFormRef.validate()) return
-      console.log('register')
-      this.$http.post('/register').then(({ data: res }) => {
-        if (res.code !== 1) {
+      console.log('register', this.registerData)
+      this.$http.post('/register', this.registerData).then(({ data: res }) => {
+        if (res.code === 0) {
           alert("注册失败，请重试")
           this.$refs.loginFormRef.reset()
+        } else if (res.code === -1) {
+          alert('该学号已被注册了')
         } else {
           console.log(res)
           alert("注册成功，去登录！")
-          this.loginVisible = !this.loginVisible
+          this.loginVisible = 0
         }
       })
     }
@@ -187,7 +191,7 @@ export default {
 
 <style>
   .theme--light.v-tabs-items {
-    background-color: transparent!important;;
+    background-color: transparent !important;
   }
   .h400 {
     height: 400px;

@@ -13,36 +13,43 @@
       >
         <v-icon color="warning">mdi-alert-outline</v-icon>：{{info.msg}}
       </v-alert>
-
-      <div class="questions ma-4 mt-8">
-        <div
-          class="question mb-4"
-          v-for="(item, i) in info.questions"
-          :key="i"
-        >
-          <div class="text-h6 pb-2">{{i+1+'、'+item}}</div>
-          <div class="options">
-            <v-radio-group
-              v-model="answerArr[i]"
-              class="mt-0"
-            >
-              <v-radio
-                v-for="(item, i) in info.options"
-                :key="i"
-                :label="item"
-                :value="i"
-              ></v-radio>
-            </v-radio-group>
+      <v-form
+        ref="formRef"
+        v-model="postValid"
+        lazy-validation
+      >
+        <div class="questions ma-4 mt-8">
+          <div
+            class="question mb-4"
+            v-for="(item, i) in info.questions"
+            :key="i"
+          >
+            <div class="text-h6 pb-2">{{i+1+'、'+item}}</div>
+            <div class="options">
+              <v-radio-group
+                v-model="answerArr[i]"
+                class="mt-0"
+                :rules="radioRule"
+              >
+                <v-radio
+                  v-for="(item, i) in info.options"
+                  :key="i"
+                  :label="item"
+                  :value="i"
+                ></v-radio>
+              </v-radio-group>
+            </div>
           </div>
         </div>
-      </div>
 
-      <v-btn
-        color="teal"
-        width="100%"
-        :disabled="btnDisabled"
-        @click="submitAnswer"
-      >提交</v-btn>
+        <v-btn
+          color="teal"
+          width="100%"
+          :disabled="btnDisabled"
+          @click="submitAnswer"
+        >提交</v-btn>
+
+      </v-form>
     </v-card>
   </v-row>
 </template>
@@ -61,6 +68,8 @@ export default {
       },
       answerArr: [],
       btnDisabled: false,
+      postValid: true,
+      radioRule: [v => ([0, 1, 2, 3, 4].indexOf(v) !== -1) || '请选择一项']
     }
   },
   created() {
@@ -73,10 +82,13 @@ export default {
   methods: {
     submitAnswer() {
       // todo 提交的表单验证
-      this.btnDisabled = !this.btnDisabled
+
+      if (!this.$refs.formRef.validate()) return
+
       console.log(this.answerArr)
-      this.$http.post('/evaluation/postAnswer', this.answerArr).then(({ data: res }) => {
+      this.$http.post('/evaluation/postAnswer', { answer: this.answerArr, type: this.type }).then(({ data: res }) => {
         console.log(res)
+        this.btnDisabled = !this.btnDisabled
         alert('提交成功')
       })
     }

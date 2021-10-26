@@ -100,12 +100,18 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    username() {
+      return window.sessionStorage.getItem('stuNo')
     }
   },
   methods: {
     getUserInfo() {
-      this.$http.get('/user/getInfo').then(({ data: res }) => {
-        if (res.code !== 1) return alert('网络出错了，请重试')
+      this.$http.get('/user/getInfo',
+        {
+          params: { stuNo: window.sessionStorage.getItem('stuNo') }
+        }
+      ).then(({ data: res }) => {
         // console.log(res.data);
         this.userInfo = res.data
       })
