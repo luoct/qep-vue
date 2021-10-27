@@ -74,7 +74,8 @@ export default {
   created() {
     this.type = this.$route.params.type
     this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
-      console.log(res)
+
+
       this.title = res.data.title
       this.info = res.data
     })
@@ -85,11 +86,17 @@ export default {
 
       if (!this.$refs.formRef.validate()) return
 
-      console.log(this.answerArr)
+      // console.log(this.answerArr)
       this.$http.post('/evaluation/postAnswer', { answer: this.answerArr, type: this.type }).then(({ data: res }) => {
-        console.log(res)
+
+        if (res.code !== 1) {
+          alert('提交失败，请重试')
+          return
+        }
         this.btnDisabled = !this.btnDisabled
-        // alert('提交成功')
+
+        let alertDesc = res.data.score !== 0 ? '你的分数为' + res.data.score : '暂无分数'
+        alert('提交成功！' + alertDesc)
       })
     }
   }

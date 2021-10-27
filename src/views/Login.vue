@@ -156,13 +156,16 @@ export default {
   }),
   methods: {
     login() {
+
       if (!this.$refs.loginFormRef.validate()) return
-      this.$http.post('/login', this.loginData).then(({ data: res }) => {
+
+      this.$http.post('/login', JSON.parse(JSON.stringify(this.loginData))).then(({ data: res }) => {
+
         if (res.code !== 1) {
-          // alert("账号密码错误，请重新登录")
+          alert("账号密码错误，请重新登录")
           this.$refs.loginFormRef.reset()
         } else {
-          console.log(res)
+          // console.log(res)
           window.sessionStorage.setItem('stuNo', res.data.stuNo)
           window.sessionStorage.setItem('token', res.data.token)
           this.$router.push('/app/user')
@@ -170,16 +173,16 @@ export default {
       })
     },
     register() {
+
       if (!this.$refs.registerFormRef.validate()) return
-      console.log('register', this.registerData)
+
       this.$http.post('/register', this.registerData).then(({ data: res }) => {
         if (res.code === 0) {
-          // alert("注册失败，请重试")
+          alert("注册失败，请重试")
           this.$refs.loginFormRef.reset()
         } else if (res.code === -1) {
-          // alert('该学号已被注册了')
+          alert('该学号已被注册了')
         } else {
-          console.log(res)
           // alert("注册成功，去登录！")
           this.loginVisible = 0
         }

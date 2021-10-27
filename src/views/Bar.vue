@@ -118,9 +118,13 @@ export default {
     },
 
     logout() {
+      window.sessionStorage.removeItem('token')
+      window.sessionStorage.removeItem('stuNo')
+      this.$router.push('/')
+
+      // todo: 不需要请求？
       this.$http.get('/logout').then(({ data: res }) => {
-        window.sessionStorage.setItem('token', '')
-        this.$router.push('/')
+        console.log(res)
       })
     }
   }

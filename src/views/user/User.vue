@@ -15,7 +15,7 @@
         >
       </v-avatar>
       <div class="title">
-        <div class="text-h5">{{ userInfo.username }}</div>
+        <div class="text-h5">{{ userInfo.username || '未登录' }}</div>
         <div class="text-body-2 mt-1">
           {{ userInfo.signature }}
         </div>
@@ -175,9 +175,9 @@ export default {
 
       this.$http.post('/user/changeInfo', this.userInfo).then(({ data: res }) => {
         if (res.code !== 1) {
-
+        alert('修改失败，请重试')
         }
-        console.log(res.data)
+        // console.log(res.data)
         // this.userInfo = res.data
         this.getUserInfo()
         // alert('修改成功')
@@ -189,11 +189,12 @@ export default {
       this.$http.post('/user/changePassword', { newPwd: this.newPwd }).then(({ data: res }) => {
         if (this.newPwd === '' || this.oldPwd === '') return
         if (res.code !== 1) {
-          // alert('网络出错了，请重试')
+          alert('网络出错了，请重试')
           return
         }
-        // alert('修改成功')
+        alert('修改成功，请重新登录')
         window.sessionStorage.removeItem('token')
+        window.sessionStorage.removeItem('stuNo')
         this.$router.push('/login')
       })
     }
