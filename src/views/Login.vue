@@ -183,7 +183,7 @@ export default {
         } else if (res.code === -1) {
           alert('该学号已被注册了')
         } else {
-          // alert("注册成功，去登录！")
+          alert("注册成功，去登录！")
           this.loginVisible = 0
         }
       })

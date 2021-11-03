@@ -4,6 +4,6 @@ module.exports = {
   ],
   plugins: [
     'transform-remove-console',
-    // '@babel/plugin-syntax-dynamic-import'
+    '@babel/plugin-syntax-dynamic-import'
   ]
 }

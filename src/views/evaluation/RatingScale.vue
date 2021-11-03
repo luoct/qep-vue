@@ -85,15 +85,15 @@ export default {
       // todo 提交的表单验证
 
       if (!this.$refs.formRef.validate()) return
-
+      this.btnDisabled = !this.btnDisabled
       // console.log(this.answerArr)
       this.$http.post('/evaluation/postAnswer', { answer: this.answerArr, type: this.type }).then(({ data: res }) => {
 
         if (res.code !== 1) {
           alert('提交失败，请重试')
+          this.btnDisabled = !this.btnDisabled
           return
         }
-        this.btnDisabled = !this.btnDisabled
 
         let alertDesc = res.data.score !== 0 ? '你的分数为' + res.data.score : '暂无分数'
         alert('提交成功！' + alertDesc)
