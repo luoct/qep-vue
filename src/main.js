@@ -7,7 +7,15 @@ import './plugins/identicon'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://localhost:3000/api/'
+
+
+if (process.env.NODE_ENV == 'development') {
+  axios.defaults.baseURL = 'http://localhost:3000/api/'
+}
+else if (process.env.NODE_ENV == 'production') {
+  axios.defaults.baseURL = 'http://118.31.8.176:3000/api/';
+}
+
 axios.interceptors.request.use((config) => {
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config

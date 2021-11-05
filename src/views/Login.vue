@@ -8,12 +8,12 @@
 
           <!-- 登录 -->
           <v-card
-            class="pa-8 ma-3 h400"
+            class="pa-8 ma-3"
             elevation="5"
           >
             <v-img
               src="../assets/q.png"
-              width="42%"
+              width="120"
               class="ma-auto"
             ></v-img>
             <v-form
@@ -23,9 +23,9 @@
             >
               <v-text-field
                 v-model="loginData.stuNo"
-                append-icon="mdi-account"
+                append-icon="mdi-school"
                 label="学号"
-                :rules="[v => !!v || '请输入账号']"
+                :rules="[v => !!v || '请输入学号']"
                 required
               />
               <v-text-field
@@ -64,7 +64,7 @@
 
           <!-- 注册 -->
           <v-card
-            class="pa-8 ma-3 h400"
+            class="pa-8 ma-3"
             elevation="5"
             transition="scroll-x-transition"
           >
@@ -154,6 +154,8 @@ export default {
     valid: true,
 
   }),
+  computed: {
+  },
   methods: {
     login() {
 
@@ -195,8 +197,5 @@ export default {
 <style>
   .theme--light.v-tabs-items {
     background-color: transparent !important;
-  }
-  .h400 {
-    height: 400px;
   }
 </style>

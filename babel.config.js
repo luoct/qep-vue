@@ -3,7 +3,7 @@ module.exports = {
     '@vue/cli-plugin-babel/preset',
   ],
   plugins: [
-    // 'transform-remove-console',
+    'transform-remove-console',
     '@babel/plugin-syntax-dynamic-import'
   ]
 }
