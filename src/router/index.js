@@ -18,6 +18,9 @@ const RatingScale = () => import(/* webpackChunkName: "group-3" */ '../views/eva
 
 const Report = () => import(/* webpackChunkName: "group-4" */ '../views/report/Report')
 
+const Err404 = () => import(/* webpackChunkName: "group-4" */ '../views/Err.vue')
+
+
 
 
 
@@ -31,19 +34,34 @@ const routes = [
     path: '/app',
     name: 'Bar',
     component: Bar,
+    meta: { isAuth: true },
     children: [
-      { path: 'user', name: 'User', component: User },
-      { path: 'evaluation', name: 'Evaluation', component: Evaluation, },
-      { path: 'rating-scale/:type', name: 'RatingScale', component: RatingScale, },
-      { path: 'report', name: 'Report', component: Report, },
+      { path: 'user', name: 'User', component: User, meta: { isAuth: true }, },
+      { path: 'evaluation', name: 'Evaluation', component: Evaluation, meta: { isAuth: true }, },
+      { path: 'rating-scale/:type', name: 'RatingScale', component: RatingScale, meta: { isAuth: true }, },
+      { path: 'report', name: 'Report', component: Report, meta: { isAuth: true }, },
     ]
   },
 
+  { path: '*', component: Err404 }
 
 ]
 
 const router = new VueRouter({
   routes,
 })
+
+router.beforeEach((to, from, next) => {
+
+  let stuNo = sessionStorage.getItem('stuNo')
+
+  if (to.meta.isAuth == true) {
+    if (stuNo) next()
+    else next('/')
+  }
+  else next()
+})
+
+
 
 export default router
