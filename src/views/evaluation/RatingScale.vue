@@ -75,7 +75,7 @@ export default {
     this.type = this.$route.params.type
     this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
 
-
+      window.console.log(res)
       this.title = res.data.title
       this.info = res.data
     })
