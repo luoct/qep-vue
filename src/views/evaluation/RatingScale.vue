@@ -4,7 +4,7 @@
     <v-overlay :value="overlayVisible">
       <v-progress-circular
         indeterminate
-        size="128"
+        size="64"
       ></v-progress-circular>
     </v-overlay>
 
