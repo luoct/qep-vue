@@ -68,7 +68,7 @@
 export default {
   data() {
     return {
-      panel: 0,
+      panel: -1,
       psychologyList: [],
       abilityList: []
     }
@@ -87,6 +87,7 @@ export default {
             this.abilityList = item.list
           }
         })
+        this.panel = 0
 
       })
     }

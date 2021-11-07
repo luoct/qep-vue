@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 
 
 if (process.env.NODE_ENV == 'development') {
-  axios.defaults.baseURL = 'http://localhost:3000/api/'
+  axios.defaults.baseURL = 'http://192.168.43.226:3000/api/'
 }
 else if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://118.31.8.176:3000/api/';
