@@ -1,6 +1,15 @@
 <template>
   <v-row>
+
+    <v-overlay :value="overlayVisible">
+      <v-progress-circular
+        indeterminate
+        size="128"
+      ></v-progress-circular>
+    </v-overlay>
+
     <v-card
+      v-if="!overlayVisible"
       elevation="5"
       width="100%"
       class="ma-2 pa-4 pb-8"
@@ -68,19 +77,25 @@ export default {
       answerArr: [],
       btnDisabled: false,
       postValid: true,
-      radioRule: [v => ([0, 1, 2, 3, 4].indexOf(v) !== -1) || '请选择一项']
+      radioRule: [v => ([0, 1, 2, 3, 4].indexOf(v) !== -1) || '请选择一项'],
+      overlayVisible: true,
     }
   },
   created() {
     this.type = this.$route.params.type
-    this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
-
-      window.console.log(res)
-      this.title = res.data.title
-      this.info = res.data
-    })
+    this.getRatingScale()
   },
   methods: {
+    getRatingScale() {
+      this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
+        window.console.log(res)
+        this.title = res.data.title
+        this.info = res.data
+
+        // 控制加载skeleton
+        this.overlayVisible = false
+      })
+    },
     submitAnswer() {
       // todo 提交的表单验证
 
