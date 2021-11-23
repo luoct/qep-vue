@@ -59,7 +59,7 @@
           </v-list>
         </v-expansion-panel-content>
       </v-expansion-panel>
-      
+
     </v-expansion-panels>
   </v-row>
 </template>
@@ -79,11 +79,11 @@ export default {
   methods: {
     getRatingScaleList() {
       this.$http.get('/evaluation/getRatingScaleList').then(({ data: res }) => {
-
+        window.console.log(res.data)
         res.data.forEach(item => {
-          if (item.type === 'psychology') {
+          if (item.category === 'psychology') {
             this.psychologyList = item.list
-          } else if (item.type === 'ability') {
+          } else if (item.category === 'ability') {
             this.abilityList = item.list
           }
         })

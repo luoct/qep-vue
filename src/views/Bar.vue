@@ -63,7 +63,12 @@
 
     <v-main>
       <v-container>
-        <router-view></router-view>
+        <transition name="slide" mode="out-in">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
+
       </v-container>
     </v-main>
   </v-app>
@@ -136,5 +141,26 @@ export default {
     font-size: 20px !important;
     text-transform: none !important;
     font-family: "Roboto", sans-serif !important;
+  }
+
+  /* todo: 动画  */
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: all 0.5s ease-out;
+  }
+  .slide-enter-to {
+
+  }
+
+  .slide-enter {
+    
+  }
+
+  .slide-leave-to {
+
+  }
+
+  .slide-leave {
+
   }
 </style>

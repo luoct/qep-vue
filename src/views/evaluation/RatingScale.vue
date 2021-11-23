@@ -88,6 +88,11 @@ export default {
   methods: {
     getRatingScale() {
       this.$http.get('/evaluation/getRatingScale', { params: { type: this.type } }).then(({ data: res }) => {
+        if (res.code === 0) {
+          this.$router.push('/app/evaluation')
+          this.overlayVisible = false
+          return
+        }
         window.console.log(res)
         this.title = res.data.title
         this.info = res.data
